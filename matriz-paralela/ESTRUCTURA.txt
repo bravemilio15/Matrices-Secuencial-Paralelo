@@ -1,0 +1,138 @@
+ESTRUCTURA DEL PROYECTO: Multiplicación de Matrices Paralelas
+================================================================
+
+matriz-paralela/
+│
+├── 📄 app.py                          # Aplicación principal Streamlit
+│   └── Interfaz web completa con 4 tabs:
+│       - Resultados de ejecución
+│       - Análisis de Amdahl
+│       - Taxonomía de Flynn
+│       - Información general
+│
+├── 📁 core/                           # Módulos principales
+│   ├── __init__.py
+│   ├── matrix_operations.py          # Operaciones de matrices
+│   │   └── Clases:
+│   │       └── MatrixOperations
+│   │           - generate_random_matrix()
+│   │           - sequential_multiply()
+│   │           - validate_matrices()
+│   │           - get_matrix_info()
+│   │
+│   ├── parallel_processor.py         # Procesamiento paralelo
+│   │   └── Clases:
+│   │       └── ParallelProcessor
+│   │           - parallel_multiply_processes()
+│   │           - parallel_multiply_threads()
+│   │           - parallel_multiply_executor()
+│   │           - compare_methods()
+│   │
+│   └── performance_metrics.py        # Métricas y análisis
+│       └── Clases:
+│           └── PerformanceMetrics
+│               - calculate_speedup()
+│               - calculate_efficiency()
+│               - amdahl_law()
+│               - analyze_results()
+│               - get_flynn_taxonomy()
+│
+├── 📁 utils/                          # Utilidades
+│   ├── __init__.py
+│   └── helpers.py                     # Funciones auxiliares
+│       - get_system_info()
+│       - estimate_memory_usage()
+│       - get_recommended_workers()
+│
+├── 📄 test_quick.py                   # Prueba rápida del sistema
+│   └── Verifica funcionamiento básico
+│
+├── 📄 requirements.txt                # Dependencias Python
+│   └── streamlit, numpy, plotly, pandas, psutil
+│
+├── 📄 README.md                       # Documentación principal
+│   └── Instalación, uso, ejemplos
+│
+├── 📄 RESPUESTAS_EJERCICIO.md         # Respuestas detalladas
+│   └── Taxonomía de Flynn y Ley de Amdahl
+│
+├── 📄 .gitignore                      # Archivos ignorados por Git
+│
+└── 📄 ESTRUCTURA.txt                  # Este archivo
+
+================================================================
+FLUJO DE EJECUCIÓN
+================================================================
+
+1. Usuario ejecuta: streamlit run app.py
+
+2. Streamlit carga app.py
+   └── Muestra interfaz web en navegador
+
+3. Usuario configura parámetros:
+   - Tamaño de matriz (100-2000)
+   - Número de workers (1,2,4,8)
+   - Método (Multiprocessing/Threading/Executor)
+
+4. Usuario presiona "Ejecutar"
+
+5. app.py llama a:
+   └── MatrixOperations.generate_random_matrix()
+       └── Genera matrices A y B
+
+6. Ejecución Secuencial:
+   └── MatrixOperations.sequential_multiply()
+       └── Multiplicación con NumPy (baseline)
+
+7. Ejecución Paralela (para cada N workers):
+   └── ParallelProcessor.parallel_multiply_processes()
+       ├── Divide matriz A en N chunks
+       ├── Crea Pool con N procesos
+       ├── Cada proceso multiplica su chunk × matriz B
+       └── Combina resultados
+
+8. Análisis de Resultados:
+   └── PerformanceMetrics.analyze_results()
+       ├── Calcula speedup
+       ├── Calcula eficiencia
+       └── Compara con Ley de Amdahl
+
+9. Visualización:
+   └── Plotly genera gráficos interactivos
+       ├── Tiempo de ejecución
+       ├── Speedup vs workers
+       ├── Eficiencia
+       └── Comparación con Amdahl
+
+================================================================
+CARACTERÍSTICAS PRINCIPALES
+================================================================
+
+✅ Multiplicación de matrices optimizada con NumPy
+✅ Paralelización real con multiprocessing
+✅ Interfaz web profesional con Streamlit
+✅ Visualizaciones interactivas con Plotly
+✅ Cálculos de Ley de Amdahl (60% y 90%)
+✅ Clasificación de Taxonomía de Flynn (MIMD)
+✅ Análisis de rendimiento completo
+✅ Soporte para matrices hasta 2000x2000
+✅ Detección automática de CPUs disponibles
+✅ Comparación de métodos de paralelización
+
+================================================================
+COMANDOS PRINCIPALES
+================================================================
+
+# Instalar dependencias
+pip install -r requirements.txt
+
+# Ejecutar prueba rápida
+python test_quick.py
+
+# Ejecutar aplicación completa
+streamlit run app.py
+
+# Ejecutar en puerto específico
+streamlit run app.py --server.port 8502
+
+================================================================
